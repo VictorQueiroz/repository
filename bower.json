@@ -1,0 +1,19 @@
+{
+  "name": "repository",
+  "version": "0.0.0",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "angular": "~1.4.5",
+    "angular-mocks": "~1.4.5",
+    "es5-shim": "~4.1.11",
+    "q": "1.0.1"
+  },
+  "main": "dist/repository.js"
+}
