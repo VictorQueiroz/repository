@@ -28,9 +28,8 @@ gulp.task('build', function () {
 		header: '(function () {',
 		footer: '}());'
 	}))
-	.pipe(uglify())
-	.pipe(wrapper({
-		header: commentHeader
+	.pipe(uglify({
+		mangle: false
 	}))
 	.pipe(gulp.dest('dist'));
 });

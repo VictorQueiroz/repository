@@ -1,41 +1,19 @@
 angular.module('repository', [])
-.factory('Repository', function () {
-	return Repository;
-})
-.factory('DataProvider', function () {
-	return DataProvider;
-})
-.factory('RepositoryConfig', function () {
-	return RepositoryConfig;
-})
+.value('Repository', Repository)
+.value('DataProvider', DataProvider)
+.value('RepositoryConfig', RepositoryConfig)
 
 // QueryBuilder
-.factory('QueryBuilder', function () {
-	return QueryBuilder;
-})
-.factory('QueryFilter', function() {
-	return QueryFilter;
-})
-.factory('QueryPagination', function () {
-	return QueryPagination;
-})
-.factory('QuerySorting', function () {
-	return QuerySorting;
-})
+.value('QueryBuilder', QueryBuilder)
+.value('QueryFilter', QueryFilter)
+.value('QueryPagination', QueryPagination)
+.value('QuerySorting', QuerySorting)
 
-.factory('Context', function () {
-	return Context;
-})
-.factory('ContextQueryBuilder', function () {
-	return ContextQueryBuilder;
-})
-.factory('ContextEventEmitter', function () {
-	return ContextEventEmitter;
-})
+.value('Context', Context)
+.value('ContextQueryBuilder', ContextQueryBuilder)
+.value('ContextEventEmitter', ContextEventEmitter)
 
-.factory('util', function () {
-	return util;
-})
-.factory('EventEmitter', function () {
-	return EventEmitter;
-});
+.value('util', util)
+.value('EventEmitter', EventEmitter);
+
+window.EventEmitter = EventEmitter;
