@@ -12,8 +12,6 @@ describe('RepositoryContext', function () {
 		context = instance.createContext('test-context');
 	});
 
-	xit('should emit update when the query updates');
-
 	it('should give access to pagination', function () {
 		context.update();
 

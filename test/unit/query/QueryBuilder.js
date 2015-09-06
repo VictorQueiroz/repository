@@ -15,7 +15,12 @@ describe('QueryBuilder', function () {
 		qb.reset();
 	});
 
-	it('should take results', function () {
+	it('should set items per page pagination property', function () {
+		qb.limit(4);
+
+		expect(qb.pagination().itemsPerPage).toBe(4);
+
+		qb.reset();
 	});
 
 	it('should reset the whole query builder', function () {

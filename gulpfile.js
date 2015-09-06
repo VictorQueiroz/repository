@@ -1,5 +1,4 @@
 var gulp = require('gulp');
-var Dgeni = require('dgeni');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var wrapper = require('gulp-wrapper');
@@ -17,6 +16,7 @@ gulp.task('build', function () {
 	  'src/query/QueryBuilder.js',
 	  'src/query/*.js',
 
+	  'src/context/ContextEventEmitter.js',
 	  'src/context/Context.js',
 	  'src/context/ContextQueryBuilder.js',
 	  'src/context/*.js',
@@ -33,12 +33,4 @@ gulp.task('build', function () {
 		header: commentHeader
 	}))
 	.pipe(gulp.dest('dist'));
-});
-
-gulp.task('docs', function () {
-	var dgeni = new Dgeni([
-		require('./docs/config')
-	]);
-
-	dgeni.generate();
 });

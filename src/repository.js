@@ -29,6 +29,9 @@ angular.module('repository', [])
 .factory('ContextQueryBuilder', function () {
 	return ContextQueryBuilder;
 })
+.factory('ContextEventEmitter', function () {
+	return ContextEventEmitter;
+})
 
 .factory('util', function () {
 	return util;

@@ -32,6 +32,7 @@ module.exports = function(config) {
 	  'src/query/QueryBuilder.js',
 	  'src/query/*.js',
 
+	  'src/context/ContextEventEmitter.js',
 	  'src/context/Context.js',
 	  'src/context/ContextQueryBuilder.js',
 	  'src/context/*.js',

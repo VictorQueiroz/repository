@@ -65,6 +65,8 @@ util.inherits(QueryPagination, EventEmitter, {
 		this.totalItems = this.totalItems || 0;
 		this.itemsPerPage = parseInt(this.itemsPerPage);
 		
+		this.totalPages = this.totalItems / this.itemsPerPage;
+
 		if(!this.totalPages || util.isFloat(this.totalPages)) {
 			this.totalPages = Math.round(this.totalItems / this.itemsPerPage);
 		}

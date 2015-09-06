@@ -1,10 +1,3 @@
-/**
- * @name QueryBuilder
- * @description
- * The query builder contains all the data
- * about the query which will needed to execute
- * the search and retrieve the data.
- */
 function QueryBuilder (resourceName) {
 	EventEmitter.call(this);
 
@@ -36,6 +29,14 @@ util.inherits(QueryBuilder, EventEmitter, {
 
 	pagination: function () {
 		return this._pagination;
+	},
+
+	limit: function (limit) {
+		this.pagination().setState({
+			itemsPerPage: limit
+		});
+
+		return this;
 	},
 
 	toJSON: function () {

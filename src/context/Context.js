@@ -3,8 +3,8 @@
  * @name Context
  * @kind function
  * @description
- * The context must be updated by the
- * Repository
+ * 
+ * 
  */
 function Context(name) {
 	EventEmitter.call(this);
@@ -32,7 +32,7 @@ Context.createQuery = function () {
 	return new ContextQueryBuilder();
 };
 
-util.inherits(Context, EventEmitter, {
+util.inherits(Context, ContextEventEmitter, {
 	INVALID_RESPONSE: 'INVALID_RESPONSE',
 
 	getData: function () {

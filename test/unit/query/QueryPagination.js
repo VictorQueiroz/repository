@@ -128,5 +128,53 @@ describe('QueryPagination', function () {
 
 		expect(pagination.currentPage).toBe(1);
 		expect(pagination.itemsPerPage).toBe(4);
+
+		pagination.reset();
+	});
+
+	it('should calc the total pages property', function () {
+		pagination.setState({
+			totalItems: 28,
+			itemsPerPage: 2
+		});
+
+		expect(pagination.totalPages).toBe(28 / 2);
+
+		pagination.reset();
+	});
+
+	it('should round fractioned items per page', function () {
+		pagination.setState({
+			totalItems: 28,
+			itemsPerPage: 2.5
+		});
+
+		expect(pagination.itemsPerPage).toBe(2);
+	});
+
+	it('should set only items per page and keep the rest', function () {
+		pagination.setState({
+			totalItems: 28,
+			itemsPerPage: 4
+		});
+
+		expect(pagination.currentPage).toBe(1);
+		expect(pagination.itemsPerPage).toBe(4);
+		expect(pagination.totalItems).toBe(28);
+		expect(pagination.totalPages).toBe(7);
+
+		pagination.next();
+
+		expect(pagination.currentPage).toBe(2);
+
+		pagination.setState({
+			itemsPerPage: 2
+		});
+
+		expect(pagination.itemsPerPage).toBe(2)
+		expect(pagination.totalPages).toBe(14)
+		expect(pagination.totalItems).toBe(28);
+		
+		pagination.reset();
 	});
 });

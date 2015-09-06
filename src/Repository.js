@@ -52,11 +52,12 @@ util.inherits(Repository, EventEmitter, {
 		return this;
 	},
 
-	/**
-	 * @name Repository#find
-	 * @description
-	 * Find many resources using the `DataProvider`
-	 */
+	removeContext: function (name) {
+		delete this.contexts[name];
+
+		return this;
+	},
+
 	find: function (queryBuilder) {
 		if(queryBuilder instanceof QueryBuilder === false) {
 			throw new Error('Invalid query builder');
@@ -65,5 +66,48 @@ util.inherits(Repository, EventEmitter, {
 		var params = queryBuilder.toJSON();
 
 		return this.dataProvider.find(this.name, params);
+	},
+
+	findOne: function (id) {
+		return this.dataProvider.findOne(this.name, id);
+	},
+
+	removeOne: function (id) {
+		return this.dataProvider.removeOne(this.name, id);
+	},
+
+	remove: function (ids) {
+		return this.dataProvider.remove(this.name, ids);
+	},
+
+	saveOne: function (entity) {
+		return this.dataProvider.save(this.name, entity).then(function (response) {
+			self.emit(self.EVENTS.UPDATE);
+
+			return response;
+		});
+	},
+
+	save: function (entities) {
+		if(entities.length === 0) {
+			return this.dataProvider.error(this.ERRORS.EMPTY_ENTITY_SET);
+		}
+
+		var self = this;
+
+		return this.dataProvider.save(this.name, entities).then(function (response) {
+			self.emit(self.EVENTS.UPDATE);
+
+			return response;
+		});
+	},
+
+	EVENTS: {
+		UPDATE: 'update'
+	},
+
+	ERRORS: {
+		EMPTY_ENTITY_SET: 'EMPTY_ENTITY_SET',
+		INVALID_ENTITY_SET: 'INVALID_ENTITY_SET'
 	}
 });
