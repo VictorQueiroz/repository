@@ -32,6 +32,10 @@ var global = {
   process: process
 };
 
+util.isFloat = function (n){
+  return n === Number(n) && n % 1 !== 0;
+};
+
 util.missing = function (method) {
   return function () {
     throw new Error('Method ' + method + ' not implemented');

@@ -1,4 +1,5 @@
 /**
+ * @ngdoc object
  * @name Context
  * @kind function
  * @description
@@ -8,7 +9,7 @@
 function Context(name) {
 	EventEmitter.call(this);
 
-	var query = Context.createQuery();
+	var query = this.createQuery();
 
 	this.name = name;
 	this.data = null;

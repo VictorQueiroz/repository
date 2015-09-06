@@ -54,28 +54,61 @@ describe('UserRepository: Repository in practice', function () {
 		});
 	}));
 
+	var scope;
+
+	beforeEach(function () {
+		scope = $rootScope.$new();
+		
+		UserListCtrl = $controller('UserListCtrl as userCtrl', {
+			$scope: scope
+		});
+	});
+
 	afterEach(function() {
 		$httpBackend.verifyNoOutstandingExpectation();
 		$httpBackend.verifyNoOutstandingRequest();
 	});
 
 	it('should create context inside controller and append it to $scope', function () {
-		var scope = $rootScope.$new();
-		var UserListCtrl = $controller('UserListCtrl as userCtrl', {
-			$scope: scope
-		});
+		expect(scope.users instanceof Context);
+	});
 
+	it('should start in the first page', function () {
 		scope.users.update();
 
 		$httpBackend.flush();
 
+		expect(scope.users.pagination().currentPage).toBe(1);
+		expect(scope.users.pagination().totalItems).toBe(12);
+
 		expect(scope.users.data.length).toBe(4);
 		expect(scope.users.data[0].name).toBe('Victor');
 
-		scope.users.pagination().next();
+		scope.users.reset();
+	});
 
+	it('should update the pagination when change the page', function () {
+		var pagination = scope.users.pagination();
+
+		scope.users.update();
+		$httpBackend.flush();
+
+		scope.users.pagination().next();
 		$httpBackend.flush();
 
 		expect(scope.users.data[0].name).toBe('Franklin');
+		expect(pagination.currentPage).toBe(2);
+
+		pagination.next();
+		$httpBackend.flush();
+
+		expect(scope.users.data[0].name).toBe('Dexter');
+		expect(pagination.currentPage).toBe(3);
+		
+		pagination.previous();
+		$httpBackend.flush();
+
+		expect(scope.users.data[0].name).toBe('Franklin');
+		expect(pagination.currentPage).toBe(2);
 	});
 });

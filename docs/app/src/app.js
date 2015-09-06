@@ -1,0 +1,1 @@
+angular.module('repository.docs', ['ui.router']);

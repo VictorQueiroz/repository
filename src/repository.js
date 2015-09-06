@@ -28,4 +28,11 @@ angular.module('repository', [])
 })
 .factory('ContextQueryBuilder', function () {
 	return ContextQueryBuilder;
+})
+
+.factory('util', function () {
+	return util;
+})
+.factory('EventEmitter', function () {
+	return EventEmitter;
 });

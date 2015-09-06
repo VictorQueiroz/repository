@@ -1,25 +1,6 @@
 function QueryPagination () {
 	EventEmitter.call(this);
 
-	this.on('update', function () {
-	});
-
-	this.on('pageChanged', function (page, oldPage) {
-		if(page === 1) {
-			this.emit('pageFirst');
-		}
-
-		if(page > oldPage) {
-			this.emit('pageNext');
-		} else if (page < oldPage) {
-			this.emit('pagePrevious');
-		}
-
-		if(page === this.totalPages) {
-			this.emit('pageLast');
-		}
-	});
-
 	this.reset();
 }
 
@@ -53,7 +34,6 @@ util.inherits(QueryPagination, EventEmitter, {
 
 		this.currentPage = page;
 
-		this.emit('pageChanged', page, oldPage);
 		this.emit('update');
 
 		return this;
@@ -84,7 +64,10 @@ util.inherits(QueryPagination, EventEmitter, {
 
 		this.totalItems = this.totalItems || 0;
 		this.itemsPerPage = parseInt(this.itemsPerPage);
-		this.totalPages = Math.round(this.totalItems / this.itemsPerPage);
+		
+		if(!this.totalPages || util.isFloat(this.totalPages)) {
+			this.totalPages = Math.round(this.totalItems / this.itemsPerPage);
+		}
 
 		this.totalPagesArray = [];
 

@@ -9,6 +9,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "canonical-path": "0.0.2",
+    "dgeni": "^0.4.1",
+    "dgeni-packages": "^0.10.19",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
     "gulp-uglify": "^1.4.0",
@@ -17,6 +20,7 @@
     "karma": "^0.13.9",
     "karma-jasmine": "^0.3.6",
     "karma-phantomjs-launcher": "^0.2.1",
+    "lodash": "^3.10.1",
     "phantomjs": "^1.9.18"
   }
 }
