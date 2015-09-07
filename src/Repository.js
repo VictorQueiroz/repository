@@ -81,7 +81,9 @@ util.inherits(Repository, EventEmitter, {
 	},
 
 	saveOne: function (entity) {
-		return this.dataProvider.save(this.name, entity).then(function (response) {
+    var self = this;
+
+		return this.dataProvider.saveOne(this.name, entity).then(function (response) {
 			self.emit(self.EVENTS.UPDATE);
 
 			return response;

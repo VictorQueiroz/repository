@@ -136,4 +136,31 @@ describe('repository', function () {
 
 		$httpBackend.flush();
 	});
+
+  it('should save a resource', function () {
+    $httpBackend.whenPOST('/api/users', {
+      name: 'Jessie Pinkman'
+    })
+    .respond(200);
+
+    repository.saveOne({
+      name: 'Jessie Pinkman'
+    });
+
+    $httpBackend.flush();
+  });
+
+  it('should save resources', function () {
+    $httpBackend.whenPOST('/api/users', {
+      name: 'foo'
+    })
+    .respond(200);
+
+    repository.save([
+      {name: 'foo'},
+      {name: 'foo'}
+    ]);
+
+    $httpBackend.flush();
+  });
 });
