@@ -32,7 +32,7 @@ util.inherits(QuerySorting, EventEmitter, {
 	},
 
 	addSorting: function (sorting) {
-		if(this.hasSorting(sorting.name)) {
+		if(!this.hasSorting(sorting.name)) {
 			this._sorting.push(sorting);
 		}
 
