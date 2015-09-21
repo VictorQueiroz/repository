@@ -1,3 +1,18 @@
+window.repository = {
+	Repository: Repository,
+	DataProvider: DataProvider,
+	RepositoryConfig: RepositoryConfig,
+	QueryBuilder: QueryBuilder,
+	QueryFilter: QueryFilter,
+	QueryPagination: QueryPagination,
+	QuerySorting: QuerySorting,
+	Context: Context,
+	ContextQueryBuilder: ContextQueryBuilder,
+	ContextEventEmitter: ContextEventEmitter,
+	util: util,
+	EventEmitter: EventEmitter
+};
+
 angular.module('repository', [])
 .value('Repository', Repository)
 .value('DataProvider', DataProvider)
@@ -15,5 +30,3 @@ angular.module('repository', [])
 
 .value('util', util)
 .value('EventEmitter', EventEmitter);
-
-window.EventEmitter = EventEmitter;
