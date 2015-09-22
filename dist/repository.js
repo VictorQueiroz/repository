@@ -1780,27 +1780,23 @@ window.repository = {
 	ContextQueryBuilder: ContextQueryBuilder,
 	ContextEventEmitter: ContextEventEmitter,
 	util: util,
-	EventEmitter: EventEmitter,
-
-	give: function (entity) {
-		return entity;
-	}
+	EventEmitter: EventEmitter
 };
 
 angular.module('repository', [])
-.factory('Repository', repository.give(Repository))
-.factory('DataProvider', repository.give(DataProvider))
-.factory('RepositoryConfig', repository.give(RepositoryConfig))
+.value('Repository', Repository)
+.value('DataProvider', DataProvider)
+.value('RepositoryConfig', RepositoryConfig)
 
 // QueryBuilder
-.factory('QueryBuilder', repository.give(QueryBuilder))
-.factory('QueryFilter', repository.give(QueryFilter))
-.factory('QueryPagination', repository.give(QueryPagination))
-.factory('QuerySorting', repository.give(QuerySorting))
+.value('QueryBuilder', QueryBuilder)
+.value('QueryFilter', QueryFilter)
+.value('QueryPagination', QueryPagination)
+.value('QuerySorting', QuerySorting)
 
-.factory('Context', repository.give(Context))
-.factory('ContextQueryBuilder', repository.give(ContextQueryBuilder))
-.factory('ContextEventEmitter', repository.give(ContextEventEmitter))
+.value('Context', Context)
+.value('ContextQueryBuilder', ContextQueryBuilder)
+.value('ContextEventEmitter', ContextEventEmitter)
 
-.factory('util', repository.give(util))
-.factory('EventEmitter', repository.give(EventEmitter));}());
+.value('util', util)
+.value('EventEmitter', EventEmitter);}());
