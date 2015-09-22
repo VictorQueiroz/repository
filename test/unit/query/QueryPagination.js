@@ -152,6 +152,15 @@ describe('QueryPagination', function () {
 		expect(pagination.itemsPerPage).toBe(2);
 	});
 
+	it('should create an array of pages', function () {
+		pagination.setState({
+			totalItems: 28,
+			itemsPerPage: 2
+		});
+
+		expect(pagination._pages.length).toBe(pagination.totalItems / pagination.itemsPerPage);
+	});
+
 	it('should set only items per page and keep the rest', function () {
 		pagination.setState({
 			totalItems: 28,

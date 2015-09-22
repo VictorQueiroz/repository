@@ -71,10 +71,10 @@ util.inherits(QueryPagination, EventEmitter, {
 			this.totalPages = Math.round(this.totalItems / this.itemsPerPage);
 		}
 
-		this.totalPagesArray = [];
+		this._pages = [];
 
-		for(var i=0; i<this.totalPages.length; i++) {
-			this.totalPagesArray.push(i + 1);
+		for(var i=0; i<this.totalPages; i++) {
+			this._pages.push(i + 1);
 		}
 	},
 

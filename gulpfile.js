@@ -28,8 +28,5 @@ gulp.task('build', function () {
 		header: '(function () {',
 		footer: '}());'
 	}))
-	.pipe(uglify({
-		mangle: false
-	}))
 	.pipe(gulp.dest('dist'));
 });
