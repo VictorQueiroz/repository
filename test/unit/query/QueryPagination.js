@@ -41,6 +41,24 @@ describe('QueryPagination', function () {
 		pagination.reset();
 	});
 
+	it('should update items per page with a method', function () {
+		pagination.setState({
+			totalItems: 100
+		});
+
+		expect(pagination.totalPages).toEqual(25);
+		expect(pagination.itemsPerPage).toEqual(4);
+		expect(pagination.totalItems).toBe(100);
+
+		pagination.setItemsPerPage(2);
+
+		expect(pagination.itemsPerPage).toBe(2);
+		expect(pagination.totalPages).toBe(50);
+		expect(pagination.totalItems).toBe(100);
+		
+		pagination.reset();
+	});
+
 	it('should go forward', function () {
 		var totalItems = 40;
 		var totalPages = totalItems / pagination.itemsPerPage;

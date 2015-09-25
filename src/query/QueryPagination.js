@@ -39,6 +39,13 @@ util.inherits(QueryPagination, EventEmitter, {
 		return this;
 	},
 
+	setItemsPerPage: function (itemsPerPage) {
+		this.setState({ itemsPerPage: itemsPerPage });
+		this.refresh();
+
+		return this;
+	},
+
 	setState: function (config) {
 		var totalItems = config.totalItems;
 
