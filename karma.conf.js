@@ -19,8 +19,6 @@ module.exports = function(config) {
 		
 		'bower_components/q/q.js',
 		'bower_components/lodash/lodash.js',
-		'bower_components/angular/angular.js',
-		'bower_components/angular-mocks/angular-mocks.js',
 		'bower_components/es5-shim/es5-shim.min.js',
 
 	  'src/util.js',

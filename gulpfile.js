@@ -25,8 +25,11 @@ gulp.task('build', function () {
 	])
 	.pipe(concat('repository.js'))
 	.pipe(wrapper({
-		header: '(function () {',
-		footer: '}());'
+		header: '(function () { "use strict"; ',
+		footer: '}.call(this));'
 	}))
+	.pipe(gulp.dest('dist'))
+	.pipe(uglify())
+	.pipe(concat('repository.min.js'))
 	.pipe(gulp.dest('dist'));
 });

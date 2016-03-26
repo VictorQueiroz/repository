@@ -1,4 +1,4 @@
-(function () {// Copyright Joyent, Inc. and other Node contributors.
+(function () { "use strict"; // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the
@@ -1775,35 +1775,56 @@ function RepositoryConfig (config) {
 
 	util.extend(this, config);
 }
-window.repository = {
-	Repository: Repository,
-	DataProvider: DataProvider,
-	RepositoryConfig: RepositoryConfig,
-	QueryBuilder: QueryBuilder,
-	QueryFilter: QueryFilter,
-	QueryPagination: QueryPagination,
-	QuerySorting: QuerySorting,
-	Context: Context,
-	ContextQueryBuilder: ContextQueryBuilder,
-	ContextEventEmitter: ContextEventEmitter,
-	util: util,
-	EventEmitter: EventEmitter
+var repository = {
+  Repository: Repository,
+  DataProvider: DataProvider,
+  RepositoryConfig: RepositoryConfig,
+  QueryBuilder: QueryBuilder,
+  QueryFilter: QueryFilter,
+  QueryPagination: QueryPagination,
+  QuerySorting: QuerySorting,
+  Context: Context,
+  ContextQueryBuilder: ContextQueryBuilder,
+  ContextEventEmitter: ContextEventEmitter,
+  util: util,
+  EventEmitter: EventEmitter
 };
 
-angular.module('repository', [])
-.value('Repository', Repository)
-.value('DataProvider', DataProvider)
-.value('RepositoryConfig', RepositoryConfig)
+// Uses AMD or browser globals to create a module. This example creates a
+// global even when AMD is used. This is useful if you have some scripts
+// that are loaded by an AMD loader, but they still want access to globals.
+// If you do not need to export a global for the AMD case, see amdWeb.js.
 
-// QueryBuilder
-.value('QueryBuilder', QueryBuilder)
-.value('QueryFilter', QueryFilter)
-.value('QueryPagination', QueryPagination)
-.value('QuerySorting', QuerySorting)
+// If you want something that will also work in Node, and still export a
+// global in the AMD case, see returnExportsGlobal.js
+// If you want to support other stricter CommonJS environments,
+// or if you need to create a circular dependency, see commonJsStrictGlobal.js
 
-.value('Context', Context)
-.value('ContextQueryBuilder', ContextQueryBuilder)
-.value('ContextEventEmitter', ContextEventEmitter)
+// Defines a module "amdWebGlobal" that depends another module called "b".
+// Note that the name of the module is implied by the file name. It is best
+// if the file name and the exported global have matching names.
 
-.value('util', util)
-.value('EventEmitter', EventEmitter);}());
+// If the 'b' module also uses this type of boilerplate, then
+// in the browser, it will create a global .b that is used below.
+
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+   // AMD. Register as an anonymous module.
+   define(['repository'], function (repository) {
+    // Also create a global in case some scripts
+    // that are loaded still are looking for
+    // a global even when an AMD loader is in use.
+    return (root.amdWebGlobal = factory(repository));
+   });
+  } else {
+    // Browser globals
+    factory(root);
+  }
+}(this, function (root) {
+  //use b in some fashion.
+
+  // Just return a value to define the module export.
+  // This example returns an object, but the module
+  // can return a function as the exported value.
+  root.repository = repository;
+}));}.call(this));
