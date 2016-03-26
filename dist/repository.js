@@ -1438,7 +1438,7 @@ util.inherits(QueryPagination, EventEmitter, {
 			throw new Error('Invalid total items property');
 		}
 
-		angular.extend(this, config);
+		repository.extend(this, config);
 
 		this.refresh();
 
@@ -1503,8 +1503,8 @@ util.inherits(QueryPagination, EventEmitter, {
 		var state = {};
 		var keys = ['itemsPerPage', 'currentPage', 'count'];
 
-		angular.forEach(keys, function (key) {
-			if(angular.isDefined(this[key])) {
+		repository.forEach(keys, function (key) {
+			if(repository.isDefined(this[key])) {
 				state[key] = this[key];
 			}
 		}, this);
@@ -1775,6 +1775,107 @@ function RepositoryConfig (config) {
 
 	util.extend(this, config);
 }
+var hasOwnProperty = Object.prototype.hasOwnProperty,
+    getPrototypeOf = Object.getPrototypeOf;
+
+function isBlankObject(value) {
+  return value !== null && typeof value === 'object' && !getPrototypeOf(value);
+}
+
+function forEach(obj, iterator, context) {
+  var key, length;
+  if (obj) {
+    if (isFunction(obj)) {
+      for (key in obj) {
+        // Need to check if hasOwnProperty exists,
+        // as on IE8 the result of querySelectorAll is an object without a hasOwnProperty function
+        if (key !== 'prototype' && key !== 'length' && key !== 'name' &&
+          (!obj.hasOwnProperty || obj.hasOwnProperty(key))
+        ) {
+          iterator.call(context, obj[key], key, obj);
+        }
+      }
+    } else if (isArray(obj) || isArrayLike(obj)) {
+      var isPrimitive = typeof obj !== 'object';
+      for (key = 0, length = obj.length; key < length; key++) {
+        if (isPrimitive || key in obj) {
+          iterator.call(context, obj[key], key, obj);
+        }
+      }
+    } else if (obj.forEach && obj.forEach !== forEach) {
+      obj.forEach(iterator, context, obj);
+    } else if (isBlankObject(obj)) {
+      // createMap() fast path --- Safe to avoid hasOwnProperty check because prototype chain is empty
+      for (key in obj) {
+        iterator.call(context, obj[key], key, obj);
+      }
+    } else if (typeof obj.hasOwnProperty === 'function') {
+      // Slow path for objects inheriting Object.prototype, hasOwnProperty check needed
+      for (key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          iterator.call(context, obj[key], key, obj);
+        }
+      }
+    } else {
+      // Slow path for objects which do not have a method `hasOwnProperty`
+      for (key in obj) {
+        if (hasOwnProperty.call(obj, key)) {
+          iterator.call(context, obj[key], key, obj);
+        }
+      }
+    }
+  }
+  return obj;
+}
+
+function toArray(toTransformEntity) {
+  var i,
+      transformedArray = [];
+  for(i = 0; i < toTransformEntity.length; i++) {
+    transformedArray[i] = toTransformEntity[i];
+  }
+  return transformedArray;
+}
+
+function isDefined(value) {
+  return value !== 'undefined';
+}
+
+function isObject(value) {
+  return value !== null && typeof value === 'object';
+}
+
+function extend (target) {
+  if(typeof target === 'undefined') target = {};
+
+  var sources = toArray(arguments).slice(1).filter(isDefined);
+
+  var source,
+      value,
+      keys,
+      key,
+      ii = sources.length,
+      jj,
+      i,
+      j;
+
+  for(i = 0; i < ii; i++) {
+    if((source = sources[i]) && isObject(source)) {
+      keys = Object.keys(source);
+      jj = keys.length;
+
+      for(j = 0; j < jj; j++) {
+        key           = keys[j];
+        value         = source[key];
+
+        target[key]   = value;
+      }
+    }
+  }
+
+  return target;
+}
+
 var repository = {
   Repository: Repository,
   DataProvider: DataProvider,
@@ -1787,7 +1888,10 @@ var repository = {
   ContextQueryBuilder: ContextQueryBuilder,
   ContextEventEmitter: ContextEventEmitter,
   util: util,
-  EventEmitter: EventEmitter
+  EventEmitter: EventEmitter,
+  isDefined: isDefined,
+  forEach: forEach,
+  extend: extend
 };
 
 // Uses AMD or browser globals to create a module. This example creates a

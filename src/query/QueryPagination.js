@@ -53,7 +53,7 @@ util.inherits(QueryPagination, EventEmitter, {
 			throw new Error('Invalid total items property');
 		}
 
-		angular.extend(this, config);
+		repository.extend(this, config);
 
 		this.refresh();
 
@@ -118,8 +118,8 @@ util.inherits(QueryPagination, EventEmitter, {
 		var state = {};
 		var keys = ['itemsPerPage', 'currentPage', 'count'];
 
-		angular.forEach(keys, function (key) {
-			if(angular.isDefined(this[key])) {
+		repository.forEach(keys, function (key) {
+			if(repository.isDefined(this[key])) {
 				state[key] = this[key];
 			}
 		}, this);
